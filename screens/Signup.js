@@ -1,5 +1,4 @@
 import {
-	Alert,
 	KeyboardAvoidingView,
 	Platform,
 	Pressable,
@@ -7,16 +6,15 @@ import {
 	Text,
 	View,
 } from "react-native";
-import { Input, Icon } from "@rneui/themed";
+import { Input, Icon, Button } from "@rneui/themed";
 import React, { useMemo, useState } from "react";
 import { useGlobalContext } from "../context/Context";
 import FirebaseService from "../context/service";
 import { Controller, useForm } from "react-hook-form";
-import Loading from "../components/Loading";
+import Toast from "react-native-root-toast";
 
 const Signup = ({ navigation }) => {
 	const { setUser } = useGlobalContext();
-	const [isLoading, setIsLoading] = useState(false);
 
 	const firebaseService = useMemo(() => new FirebaseService());
 
@@ -27,10 +25,9 @@ const Signup = ({ navigation }) => {
 		control,
 		watch,
 	} = useForm();
-	console.log(errors);
+
 	const handleSignup = async (values) => {
 		const { email, password, name } = values;
-		setIsLoading(true);
 		try {
 			const user = await firebaseService.signUp(email, password);
 			if (user) {
@@ -45,19 +42,27 @@ const Signup = ({ navigation }) => {
 				}
 			}
 			setUser(user);
-			Alert.alert("Signup Successful");
-			setIsLoading(false);
+			Toast.show("Sign up Successfull, Welcome!!", {
+				duration: Toast.durations.LONG,
+				position: Toast.positions.CENTER,
+				shadow: true,
+				animation: true,
+				hideOnPress: true,
+				delay: 0,
+			});
 			// Do something with the user, e.g., update state or navigate to another screen
 		} catch (error) {
 			console.error("Signup failed:", error.message);
-			Alert.alert(error.message.replace("Firebase: ", ""));
-			setIsLoading(false);
+			Toast.show(`Error: ${error.message.replace("Firebase: ", "")}`, {
+				duration: Toast.durations.LONG,
+				position: Toast.positions.CENTER,
+				shadow: true,
+				animation: true,
+				hideOnPress: true,
+				delay: 0,
+			});
 		}
 	};
-
-	if (isLoading) {
-		return <Loading />;
-	}
 
 	return (
 		<KeyboardAvoidingView
@@ -80,7 +85,9 @@ const Signup = ({ navigation }) => {
 							onChangeText={(value) => onChange(value)}
 							value={value}
 							errorMessage={
-								errors?.email?.message ? errors?.email?.message : null
+								errors?.email?.message
+									? errors?.email?.message
+									: null
 							}
 							errorStyle={styles.errorStyle}
 						/>
@@ -107,7 +114,9 @@ const Signup = ({ navigation }) => {
 							onChangeText={(value) => onChange(value)}
 							value={value}
 							errorMessage={
-								errors?.name?.message ? errors?.name?.message : null
+								errors?.name?.message
+									? errors?.name?.message
+									: null
 							}
 							errorStyle={styles.errorStyle}
 						/>
@@ -144,7 +153,8 @@ const Signup = ({ navigation }) => {
 						required: "Password field is required",
 						minLength: {
 							value: 6,
-							message: "Password field must be at least 6 characters",
+							message:
+								"Password field must be at least 6 characters",
 						},
 					}}
 				/>
@@ -180,15 +190,30 @@ const Signup = ({ navigation }) => {
 				/>
 
 				{/* Signup button */}
-				<Pressable
+				<Button
 					onPress={handleSubmit(handleSignup)}
-					style={[styles.btn, { marginTop: 20 }]}
+					size="sm"
+					type="solid"
+					color={"#FFF60A"}
+					containerStyle={{
+						alignSelf: "center",
+						width: "75%",
+						marginTop: 20,
+					}}
+					buttonStyle={{
+						padding: 10,
+						borderRadius: 8,
+					}}
+					loading={isSubmitting}
+					titleStyle={{ color: "black" }}
 				>
-					<Text style={styles.btnText}>SIGN UP</Text>
-				</Pressable>
+					SIGN UP
+				</Button>
 
 				<View style={styles.options}>
-					<Text style={styles.noAccountLabel}>- Or Sign Up with -</Text>
+					<Text style={styles.noAccountLabel}>
+						- Or Sign Up with -
+					</Text>
 					<View style={styles.singleOptions}>
 						<Icon name="google" type="font-awesome" />
 						<Icon name="apple" type="font-awesome" />
@@ -259,26 +284,6 @@ const styles = StyleSheet.create({
 		color: "red",
 		alignSelf: "center",
 		marginTop: 10,
-	},
-	btn: {
-		backgroundColor: "#FFF60A",
-		padding: 10,
-		height: 45,
-
-		alignSelf: "center",
-		borderRadius: 5,
-		width: "80%",
-		marginTop: 10,
-
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.23,
-		shadowRadius: 2.62,
-
-		elevation: 3,
 	},
 	btnText: {
 		color: "#484848",

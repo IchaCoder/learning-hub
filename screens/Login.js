@@ -3,7 +3,6 @@ import {
 	Text,
 	View,
 	KeyboardAvoidingView,
-	Alert,
 	Pressable,
 	Platform,
 } from "react-native";
@@ -13,12 +12,11 @@ import FirebaseService from "../context/service";
 //context API
 import { useGlobalContext } from "../context/Context";
 import { useForm, Controller } from "react-hook-form";
-import { Icon, Input } from "@rneui/themed";
-import Loading from "../components/Loading";
+import { Button, Icon, Input } from "@rneui/themed";
+import Toast from "react-native-root-toast";
 
 const Login = ({ navigation }) => {
 	const firebaseService = useMemo(() => new FirebaseService());
-	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		handleSubmit,
@@ -29,20 +27,28 @@ const Login = ({ navigation }) => {
 
 	const handleLogin = async (values) => {
 		const { email, password } = values;
-		setIsLoading(false);
 		try {
 			const user = await firebaseService.logIn(email, password);
-			setIsLoading(true);
+			Toast.show("Login Successfull, Welcome!!", {
+				duration: Toast.durations.LONG,
+				position: Toast.positions.CENTER,
+				shadow: true,
+				animation: true,
+				hideOnPress: true,
+				delay: 0,
+			});
 		} catch (error) {
-			console.error("Signup failed:", error.message);
-			Alert.alert(error.message.replace("Firebase: ", ""));
-			setIsLoading(false);
+			console.error("Login failed:", error.message);
+			Toast.show(`Error: ${error.message.replace("Firebase: ", "")}`, {
+				duration: Toast.durations.LONG,
+				position: Toast.positions.CENTER,
+				shadow: true,
+				animation: true,
+				hideOnPress: true,
+				delay: 0,
+			});
 		}
 	};
-
-	if (isLoading) {
-		return <Loading />;
-	}
 
 	return (
 		<KeyboardAvoidingView
@@ -63,7 +69,9 @@ const Login = ({ navigation }) => {
 							onChangeText={(value) => onChange(value)}
 							value={value}
 							errorMessage={
-								errors?.email?.message ? errors?.email?.message : null
+								errors?.email?.message
+									? errors?.email?.message
+									: null
 							}
 							errorStyle={styles.errorStyle}
 						/>
@@ -100,7 +108,8 @@ const Login = ({ navigation }) => {
 						required: "Password field is required",
 						minLength: {
 							value: 6,
-							message: "Password field must be at least 6 characters",
+							message:
+								"Password field must be at least 6 characters",
 						},
 					}}
 				/>
@@ -116,15 +125,30 @@ const Login = ({ navigation }) => {
 				</Pressable> */}
 
 				{/* Login button */}
-				<Pressable
+				<Button
 					onPress={handleSubmit(handleLogin)}
-					style={[styles.btn, { marginTop: 20 }]}
+					size="sm"
+					type="solid"
+					color={"#FFF60A"}
+					containerStyle={{
+						alignSelf: "center",
+						width: "75%",
+						marginTop: 20,
+					}}
+					buttonStyle={{
+						padding: 10,
+						borderRadius: 8,
+					}}
+					loading={isSubmitting}
+					titleStyle={{ color: "black" }}
 				>
-					<Text style={styles.btnText}>SIGN IN</Text>
-				</Pressable>
+					SIGN IN
+				</Button>
 
 				<View style={styles.options}>
-					<Text style={styles.noAccountLabel}>- Or Sign in with -</Text>
+					<Text style={styles.noAccountLabel}>
+						- Or Sign in with -
+					</Text>
 					<View style={styles.singleOptions}>
 						<Icon name="google" type="font-awesome" />
 						<Icon name="apple" type="font-awesome" />

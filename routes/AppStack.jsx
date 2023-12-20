@@ -3,6 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Tabs from "../components/bottom-tabs/Tabs";
 import HealthScience from "../screens/HealthScience";
+import Level from "../screens/Level";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +16,7 @@ const AppStack = () => {
 			}}
 		>
 			<Stack.Screen
-				name="Home"
+				name="HomeScreen"
 				options={{ headerShown: false }}
 				component={Tabs}
 			/>
@@ -23,6 +24,11 @@ const AppStack = () => {
 				name="College of Health Sciences"
 				options={{ headerShown: true }}
 				component={HealthScience}
+			/>
+			<Stack.Screen
+				name="Level"
+				options={{ headerShown: true }}
+				component={Level}
 			/>
 		</Stack.Navigator>
 	);
