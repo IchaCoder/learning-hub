@@ -1,14 +1,29 @@
-import { SafeAreaView, Image, StyleSheet, Text, View } from "react-native";
+import {
+	SafeAreaView,
+	Image,
+	StyleSheet,
+	Text,
+	View,
+	ScrollView,
+	FlatList,
+	Pressable,
+} from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
-import { FAB } from "@rneui/themed";
 import FirebaseService from "../context/service";
-// import Snackbar from 'react-native-snackbar';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import VirtualizedView from "../components/virtualize-view/VirtualizedView";
+
+const list = [
+	{ name: "College of Health Sciences" },
+	{ name: "College of Sciences" },
+	{ name: "College of Engineering" },
+	{ name: "College of Humanities" },
+	{ name: "College of Arts" },
+];
 
 // navigation prop comes when we wrap the component around stack.navigator
 const Home = ({ navigation }) => {
 	// const {  setIsLoggedIn } = useGlobalContext();
-	const [userData, setUserData] = useState();
-	const [status, setStatus] = useState();
 	const firebaseService = useMemo(() => new FirebaseService());
 
 	const handleLogout = async () => {
@@ -17,27 +32,73 @@ const Home = ({ navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<View style={styles.welcomeContainer}>
-				{/* <Image
-					source={{
-						uri: "https://media.cntraveler.com/photos/58de89946c3567139f9b6cca/16:9/w_2240,c_limit/GettyImages-468366251.jpg",
-						width: 400,
-						height: 300,
-						cache: "default",
-					}}
-					resizeMode="contain"
-				/> */}
-				<Text style={styles.message}>Welcome to KNUST E-LEARNING HUB</Text>
-			</View>
-			<FAB
-				placement="center"
-				color="#FFF60A"
-				size="large"
-				title="Logout"
-				onPress={handleLogout}
-			/>
-			{/* <SnackBar setSnackBar={status} /> */}
+			<VirtualizedView>
+				<View style={styles.welcomeContainer}>
+					<View>
+						<Text
+							style={{
+								fontSize: 18,
+								fontWeight: "500",
+								color: "white",
+							}}
+						>
+							Hello Kormla
+						</Text>
+						<Text
+							style={{
+								fontSize: 20,
+								fontWeight: "bold",
+								color: "white",
+								textAlign: "center",
+							}}
+						>
+							Welcome to KNUST E-learn
+						</Text>
+					</View>
+
+					<MaterialCommunityIcons
+						name="account-circle"
+						size={50}
+						color="white"
+					/>
+				</View>
+				<View style={styles.imageContainer}>
+					<Image
+						source={require("../assets/knust.png")}
+						resizeMode="cover"
+						style={{ width: "100%" }}
+					/>
+				</View>
+
+				<FlatList
+					data={list}
+					renderItem={({ item }) => (
+						<Item name={item.name} navigation={navigation} />
+					)}
+					keyExtractor={(item) => item.name}
+					style={{ marginBottom: 20 }}
+				/>
+			</VirtualizedView>
 		</SafeAreaView>
+	);
+};
+
+const Item = ({ name, navigation }) => {
+	return (
+		<Pressable
+			style={styles.collegeCard}
+			onPress={() => navigation.push(name)}
+		>
+			<Text
+				style={{
+					fontSize: 20,
+					fontWeight: "bold",
+					textAlign: "center",
+				}}
+			>
+				{name}
+			</Text>
+		</Pressable>
 	);
 };
 
@@ -49,21 +110,26 @@ const styles = StyleSheet.create({
 		backgroundColor: "#099045",
 	},
 	welcomeContainer: {
-		padding: 12,
-
-		flex: 1,
+		width: "90%",
+		alignSelf: "center",
+		justifyContent: "space-between",
+		padding: 10,
+		flexDirection: "row",
 		alignItems: "center",
 	},
-	message: {
-		fontSize: 26,
-		fontWeight: "500",
-		color: "#FFFFFF",
+	imageContainer: {
+		width: "90%",
+		alignSelf: "center",
+		marginTop: 20,
 	},
-	userContainer: {
-		marginTop: 24,
-	},
-	userDetails: {
-		fontSize: 20,
-		color: "#FFFFFF",
+	collegeCard: {
+		backgroundColor: "#FFF60A",
+		width: "90%",
+		alignSelf: "center",
+		marginTop: 20,
+		padding: 10,
+		borderStyle: "solid",
+		borderWidth: 1,
+		borderColor: "#FFF",
 	},
 });

@@ -1,8 +1,8 @@
 import React from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../screens/Home";
-import Onboarding from "../screens/Onboarding";
+import Tabs from "../components/bottom-tabs/Tabs";
+import HealthScience from "../screens/HealthScience";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +14,16 @@ const AppStack = () => {
 				headerBackTitleVisible: false,
 			}}
 		>
-			<Stack.Screen name="Home" component={Home} />
+			<Stack.Screen
+				name="Home"
+				options={{ headerShown: false }}
+				component={Tabs}
+			/>
+			<Stack.Screen
+				name="College of Health Sciences"
+				options={{ headerShown: true }}
+				component={HealthScience}
+			/>
 		</Stack.Navigator>
 	);
 };
