@@ -9,24 +9,24 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Card } from "@rneui/themed";
 
-const Level = () => {
+const Level = ({ navigation }) => {
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
 			<View style={styles.container}>
-				<Item title="LEVEL 100" />
-				<Item title="LEVEL 200" />
-				<Item title="LEVEL 300" />
-				<Item title="LEVEL 400" />
-				<Item title="LEVEL 500" />
-				<Item title="LEVEL 600" />
+				<Item title="LEVEL 100" navigation={navigation} />
+				<Item title="LEVEL 200" navigation={navigation} />
+				<Item title="LEVEL 300" navigation={navigation} />
+				<Item title="LEVEL 400" navigation={navigation} />
+				<Item title="LEVEL 500" navigation={navigation} />
+				<Item title="LEVEL 600" navigation={navigation} />
 			</View>
 		</SafeAreaView>
 	);
 };
 
-const Item = ({ title }) => {
+const Item = ({ title, navigation }) => {
 	return (
-		<TouchableOpacity>
+		<TouchableOpacity onPress={() => navigation.push("Choose Course")}>
 			<Card
 				wrapperStyle={styles.levelContainer}
 				containerStyle={{ padding: 0 }}

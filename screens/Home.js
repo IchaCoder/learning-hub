@@ -87,7 +87,7 @@ const Item = ({ name, navigation }) => {
 	return (
 		<Pressable
 			style={styles.collegeCard}
-			onPress={() => navigation.push(name)}
+			onPress={() => navigation.push("Departments", { title: name })}
 		>
 			<Text
 				style={{

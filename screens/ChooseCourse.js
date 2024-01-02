@@ -1,0 +1,59 @@
+import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Card } from "@rneui/themed";
+import ChooseCourseOptions from "../components/choose-course/ChooseCourseOption";
+import Actions from "../components/choose-course/Actions";
+
+const ChooseCourse = ({ navigation }) => {
+	const [course, setCourse] = useState("");
+	return (
+		<SafeAreaView style={styles.container}>
+			<View style={styles.profile}>
+				<MaterialCommunityIcons
+					name="account-circle"
+					size={60}
+					color="black"
+				/>
+				<Card containerStyle={styles.card}>
+					<View>
+						<Text style={styles.headingText}>Hi, Komla</Text>
+						<Text style={{ fontWeight: "300", fontSize: 16 }}>
+							Let's start learning
+						</Text>
+					</View>
+				</Card>
+			</View>
+			<ChooseCourseOptions course={course} setCourse={setCourse} />
+			<Actions navigation={navigation} />
+		</SafeAreaView>
+	);
+};
+
+export default ChooseCourse;
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	profile: {
+		flexDirection: "row",
+		alignItems: "center",
+		width: "80%",
+		alignSelf: "center",
+		gap: 4,
+		overflow: "hidden",
+		marginTop: 20,
+	},
+	headingText: {
+		fontSize: 20,
+		fontWeight: "bold",
+	},
+	card: {
+		width: "100%",
+		margin: 0,
+		padding: 10,
+		borderRadius: 15,
+	},
+});

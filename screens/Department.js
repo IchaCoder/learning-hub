@@ -1,9 +1,16 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import VirtualizedView from "../components/virtualize-view/VirtualizedView";
 import { departments } from "../components/data/data";
 
-const HealthScience = ({ navigation }) => {
+const HealthScience = ({ navigation, route }) => {
+	const { params } = route;
+	useEffect(() => {
+		navigation.setOptions({
+			title: params.title,
+		});
+	}, [navigation]);
+
 	return (
 		<View style={styles.container}>
 			<VirtualizedView>
