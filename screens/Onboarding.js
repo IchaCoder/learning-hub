@@ -1,8 +1,9 @@
-import { SafeAreaView, StyleSheet } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import { StyleSheet } from "react-native";
+import React, { useState } from "react";
 import Onboarding1 from "../components/onboarding/Onboarding1";
 import Onboarding2 from "../components/onboarding/Onboarding2";
 import Onboarding3 from "../components/onboarding/Onboarding3";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function Onboarding({ navigation }) {
 	const [index, setIndex] = useState(0);
@@ -18,7 +19,9 @@ function Onboarding({ navigation }) {
 	} else {
 		currentScreen = <Onboarding3 navigation={navigation} />;
 	}
-	return <SafeAreaView style={styles.container}>{currentScreen}</SafeAreaView>;
+	return (
+		<SafeAreaView style={styles.container}>{currentScreen}</SafeAreaView>
+	);
 }
 
 export default Onboarding;
