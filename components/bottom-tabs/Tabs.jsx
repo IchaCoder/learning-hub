@@ -31,6 +31,7 @@ const Tabs = () => {
 		<Tab.Navigator screenOptions={screenOptions}>
 			<Tab.Screen
 				options={{
+					headerShown: false,
 					tabBarIcon: ({ focused }) => {
 						return (
 							<View

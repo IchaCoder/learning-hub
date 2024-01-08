@@ -1,5 +1,4 @@
 import {
-	SafeAreaView,
 	Image,
 	StyleSheet,
 	Text,
@@ -12,6 +11,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import FirebaseService from "../context/service";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import VirtualizedView from "../components/virtualize-view/VirtualizedView";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const list = [
 	{ name: "College of Health Sciences" },
@@ -60,6 +60,7 @@ const Home = ({ navigation }) => {
 						name="account-circle"
 						size={50}
 						color="white"
+						onPress={() => navigation.push("Settings")}
 					/>
 				</View>
 				<View style={styles.imageContainer}>

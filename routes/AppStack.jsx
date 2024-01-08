@@ -9,6 +9,10 @@ import CourseMaterial from "../screens/CourseMaterial";
 import LectureVideos from "../screens/LectureVideos";
 import VideoDetails from "../screens/VideoDetails";
 import LectureRoom from "../screens/LectureRoom";
+import Settings from "../screens/Settings";
+import About from "../screens/About";
+import Help from "../screens/Help";
+import Profile from "../screens/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +63,26 @@ const AppStack = () => {
 				name="Lecture"
 				options={{ headerShown: true }}
 				component={LectureRoom}
+			/>
+			<Stack.Screen
+				name="Settings"
+				options={{ headerShown: false }}
+				component={Settings}
+			/>
+			<Stack.Screen
+				name="About"
+				options={{ headerShown: true, headerTitleAlign: "left" }}
+				component={About}
+			/>
+			<Stack.Screen
+				name="Help"
+				options={{ headerShown: true, headerTitleAlign: "left" }}
+				component={Help}
+			/>
+			<Stack.Screen
+				name="Profile"
+				options={{ headerShown: true, headerTitleAlign: "left" }}
+				component={Profile}
 			/>
 		</Stack.Navigator>
 	);
