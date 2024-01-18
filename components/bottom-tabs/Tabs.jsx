@@ -1,11 +1,14 @@
 import { Text, View } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Home from "../../screens/Home";
 import Activity from "../../screens/Activity";
+import Plays from "../../screens/Plays";
+import Notifications from "../../screens/Notifications";
 
 // navigation prop comes when we wrap the component around stack.navigator
 const Tabs = () => {
@@ -106,7 +109,33 @@ const Tabs = () => {
 					},
 				}}
 				name="Plays"
-				component={Activity}
+				component={Plays}
+			/>
+			<Tab.Screen
+				options={{
+					tabBarIcon: ({ focused }) => {
+						return (
+							<View
+								style={{
+									alignItems: "center",
+									justifyContent: "center",
+								}}
+							>
+								<Ionicons
+									name="notifications"
+									size={24}
+									color={
+										focused
+											? "#099045"
+											: "rgba(9, 144, 69, 0.5)"
+									}
+								/>
+							</View>
+						);
+					},
+				}}
+				name="Notifications"
+				component={Notifications}
 			/>
 		</Tab.Navigator>
 	);

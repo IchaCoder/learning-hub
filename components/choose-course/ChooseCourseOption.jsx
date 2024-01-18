@@ -2,14 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import { courses } from "../../library";
 const data = [
 	{ label: "Statistics", value: "statistics" },
 	{ label: "Mathematics for IT", value: "mobile_money" },
 ];
 
-const ChooseCourse = ({ setCourse, course }) => {
+const ChooseCourse = ({ setCourse, course, title }) => {
 	const [isFocus, setIsFocus] = useState(false);
+	console.log(courses[course]?.[0]?.label);
 
 	return (
 		<View style={styles.container}>
@@ -23,14 +24,14 @@ const ChooseCourse = ({ setCourse, course }) => {
 					selectedTextStyle={styles.selectedTextStyle}
 					inputSearchStyle={styles.inputSearchStyle}
 					iconStyle={styles.iconStyle}
-					data={data}
+					data={courses[course]}
 					search
 					maxHeight={300}
 					labelField="label"
 					valueField="value"
 					placeholder={!isFocus ? "Select Course" : "..."}
 					searchPlaceholder="Search..."
-					value={course}
+					value={courses[course]?.[0]?.label}
 					onFocus={() => setIsFocus(true)}
 					onBlur={() => setIsFocus(false)}
 					onChange={(item) => {

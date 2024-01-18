@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Card } from "@rneui/themed";
 import ChooseCourseOptions from "../components/choose-course/ChooseCourseOption";
 import Actions from "../components/choose-course/Actions";
 
-const ChooseCourse = ({ navigation }) => {
+const ChooseCourse = ({ navigation, route }) => {
+	const { params } = route;
 	const [course, setCourse] = useState("");
+
+	useEffect(() => {
+		setCourse(params.title);
+	}, []);
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.profile}>
@@ -25,7 +30,11 @@ const ChooseCourse = ({ navigation }) => {
 					</View>
 				</Card>
 			</View>
-			<ChooseCourseOptions course={course} setCourse={setCourse} />
+			<ChooseCourseOptions
+				course={course}
+				setCourse={setCourse}
+				title={params.title}
+			/>
 			<Actions navigation={navigation} />
 		</SafeAreaView>
 	);

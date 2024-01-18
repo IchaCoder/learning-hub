@@ -12,6 +12,7 @@ import FirebaseService from "../context/service";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import VirtualizedView from "../components/virtualize-view/VirtualizedView";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { colleges } from "../library";
 
 const list = [
 	{ name: "College of Health Sciences" },
@@ -72,7 +73,7 @@ const Home = ({ navigation }) => {
 				</View>
 
 				<FlatList
-					data={list}
+					data={colleges}
 					renderItem={({ item }) => (
 						<Item name={item.name} navigation={navigation} />
 					)}

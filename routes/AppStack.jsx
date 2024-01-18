@@ -13,6 +13,8 @@ import Settings from "../screens/Settings";
 import About from "../screens/About";
 import Help from "../screens/Help";
 import Profile from "../screens/Profile";
+import Assignments from "../screens/Assignments";
+import TestsAndQuizes from "../screens/Tests";
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +85,28 @@ const AppStack = () => {
 				name="Profile"
 				options={{ headerShown: true, headerTitleAlign: "left" }}
 				component={Profile}
+			/>
+			<Stack.Screen
+				name="Assignments"
+				options={{
+					headerShown: true,
+					headerTitleAlign: "left",
+					headerStyle: {
+						backgroundColor: "#099045",
+					},
+				}}
+				component={Assignments}
+			/>
+			<Stack.Screen
+				name="Tests and Quizes"
+				options={{
+					headerShown: true,
+					headerTitleAlign: "left",
+					headerStyle: {
+						backgroundColor: "#099045",
+					},
+				}}
+				component={TestsAndQuizes}
 			/>
 		</Stack.Navigator>
 	);

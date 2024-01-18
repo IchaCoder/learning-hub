@@ -34,6 +34,7 @@ const Actions = ({ navigation }) => {
 					gap: 12,
 					alignItems: "center",
 				}}
+				onPress={() => navigation.push("Assignments")}
 			>
 				<View style={styles.iconContainer}>
 					<FontAwesome
@@ -77,6 +78,7 @@ const Actions = ({ navigation }) => {
 					gap: 12,
 					alignItems: "center",
 				}}
+				onPress={() => navigation.navigate("Tests and Quizes")}
 			>
 				<View style={styles.iconContainer}>
 					<Ionicons name="checkmark-circle" size={24} color="white" />

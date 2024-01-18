@@ -2,9 +2,11 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import VirtualizedView from "../components/virtualize-view/VirtualizedView";
 import { departments } from "../components/data/data";
+import { faculties } from "../library";
 
 const HealthScience = ({ navigation, route }) => {
 	const { params } = route;
+
 	useEffect(() => {
 		navigation.setOptions({
 			title: params.title,
@@ -15,22 +17,17 @@ const HealthScience = ({ navigation, route }) => {
 		<View style={styles.container}>
 			<VirtualizedView>
 				<View
-					style={{ width: "90%", alignSelf: "center", marginTop: 10 }}
+					style={{
+						width: "90%",
+						alignSelf: "center",
+						marginTop: 10,
+						flexDirection: "row",
+						gap: 10,
+					}}
 				>
-					<FlatList
-						data={departments}
-						renderItem={({ item }) => (
-							<Item name={item.name} navigation={navigation} />
-						)}
-						keyExtractor={(item) => item.name}
-						style={{ marginBottom: 20, gap: 20 }}
-						numColumns={2}
-						columnWrapperStyle={{
-							gap: 15,
-							width: "100%",
-							justifyContent: "center",
-						}}
-					/>
+					{faculties[params.title].map((dep) => (
+						<Item name={dep} navigation={navigation} key={dep} />
+					))}
 				</View>
 			</VirtualizedView>
 		</View>
@@ -39,7 +36,10 @@ const HealthScience = ({ navigation, route }) => {
 
 const Item = ({ name, navigation }) => {
 	return (
-		<Pressable style={styles.card} onPress={() => navigation.push("Level")}>
+		<Pressable
+			style={styles.card}
+			onPress={() => navigation.push("Level", { title: name })}
+		>
 			<Text style={styles.text}>{name}</Text>
 		</Pressable>
 	);

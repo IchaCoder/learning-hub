@@ -12,6 +12,15 @@ import { useGlobalContext } from "../context/Context";
 import FirebaseService from "../context/service";
 import { Controller, useForm } from "react-hook-form";
 import Toast from "react-native-root-toast";
+function generateRandomDigits() {
+	// Generate a random number between 10000 and 99999
+	const randomDigits = Math.floor(10000 + Math.random() * 90000);
+
+	// Convert the number to a string
+	const randomDigitsString = randomDigits.toString();
+
+	return randomDigitsString;
+}
 
 const Signup = ({ navigation }) => {
 	const { setUser } = useGlobalContext();
@@ -36,6 +45,7 @@ const Signup = ({ navigation }) => {
 						email,
 						name,
 						uid: user?.uid,
+						id: generateRandomDigits,
 					});
 				} catch (error) {
 					console.error("Adding doc failed:", error.message);

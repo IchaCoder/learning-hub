@@ -8,25 +8,37 @@ import {
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Card } from "@rneui/themed";
+import { levels } from "../library";
 
-const Level = ({ navigation }) => {
+const Level = ({ navigation, route }) => {
+	const { params } = route;
+
+	const newLevels =
+		params.title !== "Faculty of Medicine" ? levels.slice(0, -2) : levels;
+
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
 			<View style={styles.container}>
-				<Item title="LEVEL 100" navigation={navigation} />
-				<Item title="LEVEL 200" navigation={navigation} />
-				<Item title="LEVEL 300" navigation={navigation} />
-				<Item title="LEVEL 400" navigation={navigation} />
-				<Item title="LEVEL 500" navigation={navigation} />
-				<Item title="LEVEL 600" navigation={navigation} />
+				{newLevels.map((level) => (
+					<Item
+						title={`LEVEL ${level}`}
+						navigation={navigation}
+						key={level}
+						params={params}
+					/>
+				))}
 			</View>
 		</SafeAreaView>
 	);
 };
 
-const Item = ({ title, navigation }) => {
+const Item = ({ title, navigation, params }) => {
 	return (
-		<TouchableOpacity onPress={() => navigation.push("Choose Course")}>
+		<TouchableOpacity
+			onPress={() =>
+				navigation.push("Choose Course", { title: params.title })
+			}
+		>
 			<Card
 				wrapperStyle={styles.levelContainer}
 				containerStyle={{ padding: 0 }}
